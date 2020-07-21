@@ -12,6 +12,11 @@ class App extends Component {
         videos : []
     }
 
+    componentDidMount(){
+        this.handleSubmit('')
+    }
+
+    
     handleSubmit = async (searchTerm) => {
         const response = await youtube.get("search", {
           params: {
