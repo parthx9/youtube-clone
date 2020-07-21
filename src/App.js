@@ -4,10 +4,13 @@ import youtube from './api/youtube';
 import SearchBar from './components/SearchBar';
 import { VideoDetail } from './components/VideoDetail';
 import { VideoList } from './components/VideoList';
-import axios from 'axios'
 
 
 class App extends Component {
+    state = {
+        selectedVideo : null,
+        videos : []
+    }
 
     handleSubmit = async (searchTerm) => {
         const response = await youtube.get("search", {
@@ -18,7 +21,12 @@ class App extends Component {
             q: searchTerm,
           }
         });
-        console.log(response)
+
+        this.setState({
+            selectedVideo : response.data.items[0],
+            videos : response.data.items
+        })
+        console.log(response.data.items)
       }
 
 
@@ -31,7 +39,7 @@ class App extends Component {
                             <SearchBar onFormSubmit = {this.handleSubmit} />
                         </Grid>
                         <Grid item xs={8}>
-                            <VideoDetail />
+                            <VideoDetail selectedVideo = {this.state.selectedVideo} />
                         </Grid>
                         <Grid item xs={4}>
                             {/* LIST */}
